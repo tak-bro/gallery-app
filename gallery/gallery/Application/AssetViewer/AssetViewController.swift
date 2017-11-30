@@ -14,6 +14,8 @@ class AssetViewController: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var assetCollectionView: UICollectionView!
+    @IBOutlet weak var customNavBar: UINavigationBar!
+    @IBOutlet weak var closeBtn: UIBarButtonItem!
     
     // MARK: - Properties
     
@@ -50,11 +52,16 @@ class AssetViewController: UIViewController {
         }, completion: nil)
     }
     
-    
     // MARK: - UI Function
     
     func setUI() {
         self.assetCollectionView.backgroundColor = UIColor.black
+    }
+    
+    // MARK: - Outlet Actions
+    
+    @IBAction func pressCloseBtn(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }

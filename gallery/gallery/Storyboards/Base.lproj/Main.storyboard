@@ -99,7 +99,13 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4G-o9-ewr">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="QC7-86-qfp"/>
+                                    <navigationItem title="Title" id="QC7-86-qfp">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="kup-rU-Dlx">
+                                            <connections>
+                                                <action selector="pressCloseBtn:" destination="jUl-Hv-9sT" id="NU5-ZM-yHt"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Qe3-5J-0H7">
@@ -147,6 +153,8 @@
                     </view>
                     <connections>
                         <outlet property="assetCollectionView" destination="Qe3-5J-0H7" id="IkK-ul-32k"/>
+                        <outlet property="closeBtn" destination="kup-rU-Dlx" id="0Gx-Bv-2Hx"/>
+                        <outlet property="customNavBar" destination="U4G-o9-ewr" id="Ok0-9R-TZd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="427-4e-KyM" userLabel="First Responder" sceneMemberID="firstResponder"/>
