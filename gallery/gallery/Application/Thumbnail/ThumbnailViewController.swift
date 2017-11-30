@@ -32,6 +32,18 @@ class ThumbnailViewController: UIViewController {
         initPhotoLib()
     }
     
+    // MARK: - Navigation control
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AssetVC" {
+            guard let assetVC = segue.destination as? AssetViewController else { return }
+            guard let selectedIndexPath = sender as? IndexPath else { return }
+            
+            assetVC.photoLibrary = self.photoLibrary
+            assetVC.passedIndexPath = selectedIndexPath
+        }
+    }
+    
     // MARK: - Helper Functions
     
     func initPhotoLib() {
@@ -88,7 +100,7 @@ extension ThumbnailViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("get selected collectionview itemindex \(indexPath.row)")
+        self.performSegue(withIdentifier: "AssetVC", sender: indexPath)
     }
     
 }
