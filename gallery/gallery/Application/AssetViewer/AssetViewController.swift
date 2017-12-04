@@ -16,6 +16,9 @@ class AssetViewController: UIViewController {
     @IBOutlet weak var assetCollectionView: UICollectionView!
     @IBOutlet weak var customNavBar: UINavigationBar!
     @IBOutlet weak var closeBtn: UIBarButtonItem!
+    @IBOutlet weak var navBarTitle: UINavigationItem!
+    @IBOutlet weak var leftArrowBtn: UIButton!
+    @IBOutlet weak var rightArrowBtn: UIButton!
     
     // MARK: - Properties
     
@@ -26,12 +29,14 @@ class AssetViewController: UIViewController {
     fileprivate var numberOfSections = 1
     fileprivate let sectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     fileprivate let itemsPerRow: CGFloat = 4
-
+    
     // MARK: - Initialze
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setUI()
+        setNavTitle(indexPath: self.passedIndexPath)
         initCollectionView()
     }
     
@@ -58,12 +63,23 @@ class AssetViewController: UIViewController {
         self.assetCollectionView.backgroundColor = UIColor.black
     }
     
+    func setNavTitle(indexPath: IndexPath) {
+        self.navBarTitle.title = "\(indexPath.row+1) / \(self.photoLibrary.count)"
+    }
+    
     // MARK: - Outlet Actions
     
     @IBAction func pressCloseBtn(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
+    @IBAction func pressLeftArrow(_ sender: UIButton) {
+        // TODO
+    }
+    
+    @IBAction func pressRightArrow(_ sender: UIButton) {
+        // TODO
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource {
@@ -100,7 +116,7 @@ extension AssetViewController: UICollectionViewDelegate, UICollectionViewDataSou
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
             return cell
         }
-   }
+    }
     
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
@@ -114,6 +130,9 @@ extension AssetViewController: UICollectionViewDelegate, UICollectionViewDataSou
         // Show media data
         self.photoLibrary.setLibrary(mode: .full, at: indexPath.row) { image, isVideo in
             DispatchQueue.main.async {
+                // set title
+                self.setNavTitle(indexPath: indexPath)
+                
                 if isVideo {
                     let cell = cell as! VideoCell
                     cell.avPlayer?.play()
@@ -152,6 +171,7 @@ extension AssetViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension AssetViewController {
+    
     // to pause video when dragging
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let indexPath = self.assetCollectionView.indexPathsForVisibleItems.first

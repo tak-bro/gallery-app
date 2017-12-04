@@ -15,10 +15,19 @@ enum ViewMode {
 }
 
 class PhotoLibrary {
+    
+    // MARK: - Properties
+    
     fileprivate var imgManager: PHImageManager
     fileprivate var requestOptions: PHImageRequestOptions
     fileprivate var fetchOptions: PHFetchOptions
     fileprivate var fetchResult: PHFetchResult<PHAsset>
+    
+    var count: Int {
+        return fetchResult.count
+    }
+    
+    // MARK: - Init
     
     init () {
         imgManager = PHImageManager.default()
@@ -31,11 +40,7 @@ class PhotoLibrary {
         fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
         fetchResult = PHAsset.fetchAssets(with: fetchOptions)
     }
-    
-    var count: Int {
-        return fetchResult.count
-    }
-    
+
     // MARK:- Function
     
     func getAsset(at index: Int) -> PHAsset? {
