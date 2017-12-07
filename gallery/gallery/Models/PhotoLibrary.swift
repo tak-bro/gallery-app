@@ -18,7 +18,7 @@ class PhotoLibrary {
     
     // MARK: - Properties
     
-    fileprivate var imgManager: PHImageManager
+    fileprivate var imgManager: PHCachingImageManager
     fileprivate var requestOptions: PHImageRequestOptions
     fileprivate var fetchOptions: PHFetchOptions
     fileprivate var fetchResult: PHFetchResult<PHAsset>
@@ -30,7 +30,7 @@ class PhotoLibrary {
     // MARK: - Init
     
     init () {
-        imgManager = PHImageManager.default()
+        imgManager = PHCachingImageManager.default() as! PHCachingImageManager 
         requestOptions = PHImageRequestOptions()
         requestOptions.isSynchronous = true
         fetchOptions = PHFetchOptions()
