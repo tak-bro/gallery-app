@@ -39,7 +39,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uHc-uM-Tcb">
                                                     <rect key="frame" x="0.0" y="0.0" width="201" height="201"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dpp-FH-fsM">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_play" translatesAutoresizingMaskIntoConstraints="NO" id="Dpp-FH-fsM">
                                                     <rect key="frame" x="75" y="75" width="50" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="bcc-N7-NPw"/>
@@ -277,5 +277,6 @@
         <image name="btn_left_arrow" width="24" height="24"/>
         <image name="btn_right_arrow" width="24" height="24"/>
         <image name="icon_albums" width="30" height="30"/>
+        <image name="icon_play" width="256" height="256"/>
     </resources>
 </document>

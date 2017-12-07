@@ -139,8 +139,7 @@ extension AssetViewController: UICollectionViewDelegate, UICollectionViewDataSou
                 self.setNavTitle(indexPath: indexPath)
                 
                 if isVideo {
-                    let cell = cell as! VideoCell
-                    cell.avPlayer?.play()
+                    let _ = cell as! VideoCell
                 } else { // .image
                     let cell = cell as! ImageCell
                     cell.assetImg.image = image
@@ -177,16 +176,17 @@ extension AssetViewController: UICollectionViewDelegateFlowLayout {
 
 extension AssetViewController {
     
-    // to pause video when dragging
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        let indexPath = self.assetCollectionView.indexPathsForVisibleItems.first
+        guard let indexPath = self.assetCollectionView.indexPathsForVisibleItems.first else { return }
         
-        if let asset = self.photoLibrary.getAsset(at: (indexPath?.row)!),
+        // to pause video when dragging
+        if let asset = self.photoLibrary.getAsset(at: indexPath.row),
             asset.mediaType == .video {
-            let cell = self.assetCollectionView.cellForItem(at: indexPath!) as! VideoCell
+            let cell = self.assetCollectionView.cellForItem(at: indexPath) as! VideoCell
             cell.avPlayer?.pause()
         }
     }
+    
 }
 
 // MARK: - Gesture for dismiss view
