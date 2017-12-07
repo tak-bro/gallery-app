@@ -22,15 +22,19 @@ class AssetViewController: UIViewController {
     
     // MARK: - Properties
     
-    var photoLibrary: PhotoLibrary!
-    var passedIndexPath = IndexPath()
-    
     fileprivate var scollOnceOnly = false
     fileprivate var numberOfSections = 1
     fileprivate let sectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     fileprivate let itemsPerRow: CGFloat = 4
     
+    var photoLibrary: PhotoLibrary!
+    var passedIndexPath = IndexPath()
+    // gesture
+    var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
+    var panGestureRecognizer: UIPanGestureRecognizer?
+    
     // MARK: - Initialze
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +42,7 @@ class AssetViewController: UIViewController {
         setUI()
         setNavTitle(indexPath: self.passedIndexPath)
         initCollectionView()
+        initGesture()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -182,4 +187,37 @@ extension AssetViewController {
             cell.avPlayer?.pause()
         }
     }
+}
+
+// MARK: - Gesture for dismiss view
+
+extension AssetViewController {
+    
+    func initGesture() {
+        self.panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
+        if let panGestureRecognizer = self.panGestureRecognizer {
+            view.addGestureRecognizer(panGestureRecognizer)
+        }
+    }
+    
+    @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
+        let touchPoint = sender.location(in: self.view?.window)
+        
+        if sender.state == UIGestureRecognizerState.began {
+            initialTouchPoint = touchPoint
+        } else if sender.state == UIGestureRecognizerState.changed {
+            if touchPoint.y - initialTouchPoint.y > 0 {
+                self.view.frame = CGRect(x: 0, y: touchPoint.y - initialTouchPoint.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            }
+        } else if sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled {
+            if touchPoint.y - initialTouchPoint.y > 100 {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+                })
+            }
+        }
+    }
+    
 }
